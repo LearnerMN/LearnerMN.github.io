@@ -41,6 +41,92 @@
 
 <p>Having trouble with Pages? Check out our <a href="https://help.github.com/pages">documentation</a> or <a href="https://github.com/contact">contact support</a> and we’ll help you sort it out.</p>
 
+<div class="highlight highlight-source-c++"><pre>#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>vector<span class="pl-pds">&gt;</span></span>
+#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>iostream<span class="pl-pds">&gt;</span></span>
+
+<span class="pl-k">int</span> MOD = <span class="pl-c1">1000000007</span>;
+<span class="pl-k">using</span> <span class="pl-k">namespace</span> <span class="pl-en">std</span><span class="pl-k">;</span>
+<span class="pl-c">// Matrix class</span>
+<span class="pl-k">class</span> <span class="pl-en">Matrix</span>{
+    <span class="pl-k">public:</span>
+        <span class="pl-k">int</span> N; <span class="pl-c">// Matrix size</span>
+        vector&lt; vector&lt; <span class="pl-k">long</span> <span class="pl-k">long</span> &gt; &gt; data; <span class="pl-c">// matrix values</span>
+
+        <span class="pl-en">Matrix</span>(<span class="pl-k">int</span> N); <span class="pl-c">// constructor resize N matrix</span>
+        <span class="pl-en">Matrix</span>(<span class="pl-k">const</span> Matrix &amp;matrix); <span class="pl-c">// constructor assign matrix values</span>
+
+        <span class="pl-k">const</span> Matrix &amp;<span class="pl-k">operator</span>=(<span class="pl-k">const</span> Matrix &amp;A); <span class="pl-c">// assign operator</span>
+        <span class="pl-k">const</span> Matrix <span class="pl-k">operator</span>*(<span class="pl-k">const</span> Matrix &amp;A); <span class="pl-c">// product operator</span>
+        <span class="pl-k">const</span> Matrix <span class="pl-k">operator</span>^(<span class="pl-k">int</span> P ); <span class="pl-c">// pow operator</span>
+
+        <span class="pl-en">~Matrix</span>(); 
+};
+
+<span class="pl-en">Matrix::Matrix</span>(<span class="pl-k">int</span> N){
+    <span class="pl-v">this</span>-&gt;N = N;
+    data = vector&lt; vector&lt; <span class="pl-k">long</span> <span class="pl-k">long</span> &gt; &gt;(N, vector&lt; <span class="pl-k">long</span> <span class="pl-k">long</span> &gt;(N));
+}
+
+<span class="pl-en">Matrix::Matrix</span>(<span class="pl-k">const</span> Matrix &amp;A){
+    <span class="pl-v">this</span>-&gt;N = A.<span class="pl-smi">N</span>;
+    data = vector&lt; vector&lt; <span class="pl-k">long</span> <span class="pl-k">long</span> &gt; &gt;(A.<span class="pl-smi">data</span>);
+}
+<span class="pl-en">Matrix::~Matrix</span>(){
+    data.<span class="pl-c1">clear</span>();
+}
+
+<span class="pl-k">const</span> Matrix &amp;Matrix::<span class="pl-k">operator</span>=(<span class="pl-k">const</span> Matrix &amp;A){
+    <span class="pl-k">if</span>( &amp;A != <span class="pl-v">this</span> ){
+        data.<span class="pl-c1">clear</span>();
+        N = A.<span class="pl-smi">N</span>;
+        data = vector&lt; vector&lt; <span class="pl-k">long</span> <span class="pl-k">long</span> &gt; &gt;(A.<span class="pl-smi">data</span>);
+    }
+    <span class="pl-k">return</span> *<span class="pl-v">this</span>;
+}
+<span class="pl-k">const</span> Matrix Matrix::<span class="pl-k">operator</span>*(<span class="pl-k">const</span> Matrix &amp;A){
+    Matrix <span class="pl-smi">C</span>(A.<span class="pl-smi">N</span>);
+    <span class="pl-k">for</span>( <span class="pl-k">int</span> i = <span class="pl-c1">0</span>; i &lt; A.<span class="pl-smi">N</span>; ++i )
+        <span class="pl-k">for</span>( <span class="pl-k">int</span> j = <span class="pl-c1">0</span>; j &lt; A.<span class="pl-smi">N</span>; ++j ){
+            <span class="pl-k">for</span>( <span class="pl-k">int</span> k = <span class="pl-c1">0</span>; k &lt; A.<span class="pl-smi">N</span>; ++k )
+                C.<span class="pl-smi">data</span>[i][j] = (C.<span class="pl-smi">data</span>[i][j] + data[i][k] * A.<span class="pl-smi">data</span>[k][j])%MOD;
+        }
+    <span class="pl-k">return</span> C;
+}
+
+<span class="pl-k">const</span> Matrix Matrix::<span class="pl-k">operator</span>^(<span class="pl-k">int</span> P){
+    <span class="pl-k">if</span>(P == <span class="pl-c1">1</span>) <span class="pl-k">return</span> (*<span class="pl-v">this</span>);
+    <span class="pl-k">if</span>(P &amp; <span class="pl-c1">1</span>) <span class="pl-k">return</span> ((*<span class="pl-v">this</span>) * ((*<span class="pl-v">this</span>) ^ (P-<span class="pl-c1">1</span>)));
+    Matrix B = ((*<span class="pl-v">this</span>) ^ (P/<span class="pl-c1">2</span>));
+    <span class="pl-k">return</span> (B*B);
+}
+
+<span class="pl-k">long</span> <span class="pl-k">long</span> <span class="pl-en">value</span>(Matrix &amp;matrix,<span class="pl-k">int</span> P,vector&lt; <span class="pl-k">int</span> &gt; &amp;def){
+    <span class="pl-k">if</span> (P &lt;= def.<span class="pl-c1">size</span>())
+        <span class="pl-k">return</span> def[P-<span class="pl-c1">1</span>];
+    Matrix res = matrix^(P-def.<span class="pl-c1">size</span>());
+    <span class="pl-k">return</span> ((res.<span class="pl-smi">data</span>[<span class="pl-c1">0</span>][<span class="pl-c1">0</span>] * def[<span class="pl-c1">1</span>])%MOD + (res.<span class="pl-smi">data</span>[<span class="pl-c1">0</span>][<span class="pl-c1">1</span>] * def[<span class="pl-c1">0</span>])%MOD)%MOD;
+}
+
+<span class="pl-c">// main</span>
+<span class="pl-k">int</span> <span class="pl-en">main</span>(){
+
+    vector&lt; <span class="pl-k">int</span> &gt; def = {<span class="pl-c1">4</span>,<span class="pl-c1">14</span>};
+
+    Matrix <span class="pl-smi">matrix</span>(<span class="pl-c1">2</span>);
+    matrix.<span class="pl-smi">data</span>[<span class="pl-c1">0</span>][<span class="pl-c1">0</span>] = <span class="pl-c1">3</span>; matrix.<span class="pl-smi">data</span>[<span class="pl-c1">0</span>][<span class="pl-c1">1</span>] = <span class="pl-c1">2</span>;
+    matrix.<span class="pl-smi">data</span>[<span class="pl-c1">1</span>][<span class="pl-c1">0</span>] = <span class="pl-c1">1</span>; matrix.<span class="pl-smi">data</span>[<span class="pl-c1">1</span>][<span class="pl-c1">1</span>] = <span class="pl-c1">0</span>;
+
+    <span class="pl-k">int</span> t;
+    cin&gt;&gt;t;
+    <span class="pl-k">while</span> (t--){
+        <span class="pl-k">int</span> n;
+        cin&gt;&gt;n;
+        cout&lt;&lt;<span class="pl-c1">value</span>(matrix,n,def)&lt;&lt;endl;
+    }
+
+    <span class="pl-k">return</span> <span class="pl-c1">0</span>;
+}</pre></div>
+
       <footer class="site-footer">
 
         <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
