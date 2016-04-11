@@ -196,7 +196,11 @@ M^k x |  f(n)  | = | f(n+k) |
     <span class="pl-k">if</span> (P &lt;= def.<span class="pl-c1">size</span>())
         <span class="pl-k">return</span> def[P-<span class="pl-c1">1</span>];
     Matrix res = matrix^(P-def.<span class="pl-c1">size</span>());
-    <span class="pl-k">return</span> ((res.<span class="pl-smi">data</span>[<span class="pl-c1">0</span>][<span class="pl-c1">0</span>] * def[<span class="pl-c1">1</span>])%MOD + (res.<span class="pl-smi">data</span>[<span class="pl-c1">0</span>][<span class="pl-c1">1</span>] * def[<span class="pl-c1">0</span>])%MOD)%MOD;
+    <span class="pl-k">int</span> val = <span class="pl-c1">0</span>;
+    <span class="pl-k">for</span> (<span class="pl-k">int</span> i=<span class="pl-c1">0</span>,t = def.<span class="pl-c1">size</span>()-<span class="pl-c1">1</span>; i&lt;res.<span class="pl-smi">data</span>[<span class="pl-c1">0</span>].<span class="pl-c1">size</span>(); i++,t--){
+        val = (val + (res.<span class="pl-smi">data</span>[<span class="pl-c1">0</span>][i] * def[t])%MOD)%MOD;
+    }
+    <span class="pl-k">return</span> val;
 }
 
 <span class="pl-k">int</span> <span class="pl-en">main</span>(){
