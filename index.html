@@ -43,37 +43,41 @@
 <h3>
 <a id="Анализ" class="anchor" href="#%D0%90%D0%BD%D0%B0%D0%BB%D0%B8%D0%B7" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Анализ</h3>
 
-<p></p>
-Дараах рекурентийн хувьд авч үзье: f(n) = f(n-1) + f(n-2).
+<p>Дараах рекурентийн хувьд авч үзье: <code>f(n) = f(n-1) + f(n-2)</code>.</p>
 
-<p>M x |  f(n)  | = | f(n+1) |
-    | f(n-1) |   |  f(n)  |</p>
+<pre><code>M x |  f(n)  | = | f(n+1) |
+    | f(n-1) |   |  f(n)  |
+</code></pre>
 
 <p>Тэгшитгэлийн 2 талыг <code>M</code>-р үржье</p>
 
-<p>M x M x |  f(n)  | = M x | f(n+1) | = | f(n+2) |
-        | f(n-1) |       |  f(n)  |   | f(n+1) |</p>
+<pre><code>M x M x |  f(n)  | = M x | f(n+1) | = | f(n+2) |
+        | f(n-1) |       |  f(n)  |   | f(n+1) |
+</code></pre>
 
 <p>Эмхэтгэвэл:</p>
 
-<p>M^2 x |  f(n)  | = | f(n+2) |
-      | f(n-1) |   | f(n+1) |</p>
+<pre><code>M^2 x |  f(n)  | = | f(n+2) |
+      | f(n-1) |   | f(n+1) |
+</code></pre>
 
 <p>Дараах байдалтай болох нь харагдаж байна.</p>
 
-<p>M^3 x |  f(n)  | = | f(n+3) |
-      | f(n-1) |   | f(n+2) |</p>
+<pre><code>M^3 x |  f(n)  | = | f(n+3) |
+      | f(n-1) |   | f(n+2) |
+</code></pre>
 
-<p>M^4 x |  f(n)  | = | f(n+4) |
-      | f(n-1) |   | f(n+3) |</p>
+<pre><code>M^4 x |  f(n)  | = | f(n+4) |
+      | f(n-1) |   | f(n+3) |
+</code></pre>
 
 <p>...............................
 ...............................
 ...............................</p>
 
-<p>M^k x |  f(n)  | = | f(n+k) |
+<pre><code>M^k x |  f(n)  | = | f(n+k) |
       | f(n-1) |   |f(n+k-1)|
-</p>
+</code></pre>
 
 <h3>
 <a id="Матрицын-c-хэл-дээрх-код" class="anchor" href="#%D0%9C%D0%B0%D1%82%D1%80%D0%B8%D1%86%D1%8B%D0%BD-c-%D1%85%D1%8D%D0%BB-%D0%B4%D1%8D%D1%8D%D1%80%D1%85-%D0%BA%D0%BE%D0%B4" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Матрицын C++ хэл дээрх код</h3>
