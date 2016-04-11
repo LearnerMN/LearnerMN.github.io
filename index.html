@@ -2,7 +2,7 @@
 <html lang="en-us">
   <head>
     <meta charset="UTF-8">
-    <title>Рекурент харьцаа ба матриц by LearnerMN</title>
+    <title>Рекуррент харьцаа ба матриц by LearnerMN</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
@@ -11,15 +11,15 @@
   </head>
   <body>
     <section class="page-header">
-      <h1 class="project-name">Рекурент харьцаа ба матриц</h1>
+      <h1 class="project-name">Рекуррент харьцаа ба матриц</h1>
       <h2 class="project-tagline">Алгоритм, Математик, Программ</h2>
     </section>
 
     <section class="main-content">
       <h1>
-<a id="Рекурент-харьцаа-ба-матриц" class="anchor" href="#%D0%A0%D0%B5%D0%BA%D1%83%D1%80%D0%B5%D0%BD%D1%82-%D1%85%D0%B0%D1%80%D1%8C%D1%86%D0%B0%D0%B0-%D0%B1%D0%B0-%D0%BC%D0%B0%D1%82%D1%80%D0%B8%D1%86" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Рекурент харьцаа ба матриц</h1>
+<a id="Рекуррент-харьцаа-ба-матриц" class="anchor" href="#%D0%A0%D0%B5%D0%BA%D1%83%D1%80%D1%80%D0%B5%D0%BD%D1%82-%D1%85%D0%B0%D1%80%D1%8C%D1%86%D0%B0%D0%B0-%D0%B1%D0%B0-%D0%BC%D0%B0%D1%82%D1%80%D0%B8%D1%86" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Рекуррент харьцаа ба матриц</h1>
 
-<p>Рекурент харьцаагаар өгөгдсөн шугаман тэгшитгэлийг/ <code>F(n) = A*F(n-1) + B*F(n-2)</code> / бид нар бодохдоо динамик програмчлалын арга ашиглаж боддог. </p>
+<p>Рекуррент харьцаагаар өгөгдсөн шугаман тэгшитгэлийг/ <code>F(n) = A*F(n-1) + B*F(n-2)</code> / бид нар бодохдоо динамик програмчлалын арга ашиглаж боддог. </p>
 
 <div class="highlight highlight-source-c++"><pre><span class="pl-k">int</span> <span class="pl-en">F</span>(<span class="pl-k">int</span> A,<span class="pl-k">int</span> B, <span class="pl-k">int</span> N){
     vector&lt; <span class="pl-k">int</span> &gt; F[N+<span class="pl-c1">1</span>];
@@ -33,7 +33,47 @@
 
 <p>Энэ нь <code>N</code>-р гишүүнийг олоход <code>O(N)</code> хугацаа зарцуулдаг. Гэвч зарим тохиолдолд бид <code>LogN</code>-р бодох шаардлага гарч ирдэг.</p>
 
-<p>Бид нар шугаман рекурент тэгшитгэлийг Xi+1 = M Xi хэлбэртэй бичиж болно. Үүнд:</p>
+<p>Бид нар шугаман рекуррент тэгшитгэлийг <code>X(i+1) = M X(i)</code> хэлбэртэй бичиж болно. Үүнд:
+<code>X(i+1)</code> болон <code>X(i)</code> нь <code>1 x K</code> хэмжээтэй матриц. <code>M</code> нь <code>K x K</code>хэмжээтэй матриц.</p>
+
+<pre><code>| f(n+1)   |       | f(n)   |
+|  f(n)    |       | f(n-1) |
+| f(n-1)   | = M x | f(n-2) |
+| ......   |       | ...... |
+| f(n-k+1) |       | f(n-k) |
+</code></pre>
+
+<p>Эндээс бид нар рекуррент харьцаагаа ашиглаад <code>M</code> матрицаа олно.</p>
+
+<ol>
+<li>Хамгийн энгийн рекуррент харьцаа болох Фиббоначийн дараалалыг авч үзье.
+<code>f(n) = f(n-1) + f(n-2)</code> =&gt; <code>f(n+1) = f(n) + f(n-1)</code>
+Тэгвэл X(i+1) болон X(i) матрицууд дараах байдлаар бичигдэнэ.</li>
+</ol>
+
+<pre><code>| f(n+1) | = M x | f(n)   | =&gt; | f(n+1) | = | a b | x | f(n)   |
+| f(n)   |       | f(n-1) |    | f(n)   |   | c d |   | f(n-1) |
+</code></pre>
+
+<p>Эндээс харахад бидний <code>K</code> тоо буюу матрицын хэмжээ нь тухайн харьцаа өөрөөсөө өмнөх хэдэн гишүүнээсээ хамааралтай байна гэдгээс олно. Фиббаночийн хувьд өмнөх 2 гишүүнээсээ хамаардаг тул матрицын хэмжээ <code>K=2</code>.
+Одоо <code>М</code> матрицыг олъё. Дээрх <code>M</code> болон <code>X(i-1)</code> матрицыг үржвэл:</p>
+
+<pre><code>a*f(n) + b*f(n-1) = f(n+1) 
+c*f(n) + d*f(n-1) = f(n)
+</code></pre>
+
+<p>Дарааллыхаа эхний 3-н гишүүнийг мэдэх учир орлуулаад бодохоор a=1, b=1, c=1, d=0 гэж гарна. 
+Одоо бид М-г мэдэх учраас дараах байдлаар бичиж болно.</p>
+
+<pre><code>| f(n+1) | = | 1 1 | x | f(n)   |
+| f(n)   |   | 1 0 |   | f(n-1) |
+</code></pre>
+
+<pre><code>| ? | = | 1 1 | x | 8 |
+| 8 |   | 1 0 |   | 5 |
+</code></pre>
+
+<p>? =&gt; 8<em>1 + 5</em>1 = 13 </p>
 
 <h3>
 <a id="Матриц-үүсгэх" class="anchor" href="#%D0%9C%D0%B0%D1%82%D1%80%D0%B8%D1%86-%D2%AF%D2%AF%D1%81%D0%B3%D1%8D%D1%85" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Матриц үүсгэх</h3>
@@ -43,7 +83,7 @@
 <h3>
 <a id="Анализ" class="anchor" href="#%D0%90%D0%BD%D0%B0%D0%BB%D0%B8%D0%B7" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Анализ</h3>
 
-<p>Дараах рекурентийн хувьд авч үзье: <code>f(n) = f(n-1) + f(n-2)</code>.</p>
+<p>Дараах рекуррентийн хувьд авч үзье: <code>f(n) = f(n-1) + f(n-2)</code>.</p>
 
 <pre><code>M x |  f(n)  | = | f(n+1) |
     | f(n-1) |   |  f(n)  |
@@ -69,13 +109,12 @@
 
 <pre><code>M^4 x |  f(n)  | = | f(n+4) |
       | f(n-1) |   | f(n+3) |
-</code></pre>
 
-<p>...............................
 ...............................
-...............................</p>
+...............................
+...............................
 
-<pre><code>M^k x |  f(n)  | = | f(n+k) |
+M^k x |  f(n)  | = | f(n+k) |
       | f(n-1) |   |f(n+k-1)|
 </code></pre>
 
