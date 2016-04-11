@@ -154,7 +154,21 @@ M^k x |  f(n)  | = | f(n+k) |
 <p>Хэрвээ <code>К</code> зэргийг <code>Log</code>-д олж чадвал <code>O(N^3*LogK)</code> болно. </p>
 
 <h3>
-<a id="3-Хуваагаад-эзэмдэх-аргаар-зэргийг-ologn-д-олох" class="anchor" href="#3-%D0%A5%D1%83%D0%B2%D0%B0%D0%B0%D0%B3%D0%B0%D0%B0%D0%B4-%D1%8D%D0%B7%D1%8D%D0%BC%D0%B4%D1%8D%D1%85-%D0%B0%D1%80%D0%B3%D0%B0%D0%B0%D1%80-%D0%B7%D1%8D%D1%80%D0%B3%D0%B8%D0%B9%D0%B3-ologn-%D0%B4-%D0%BE%D0%BB%D0%BE%D1%85" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>3. Хуваагаад эзэмдэх аргаар зэргийг <code>O(LogN)</code>-д олох.</h3>
+<a id="Хуваагаад-нэгтгэх-аргаар-зэргийг-ologn-д-олох" class="anchor" href="#%D0%A5%D1%83%D0%B2%D0%B0%D0%B0%D0%B3%D0%B0%D0%B0%D0%B4-%D0%BD%D1%8D%D0%B3%D1%82%D0%B3%D1%8D%D1%85-%D0%B0%D1%80%D0%B3%D0%B0%D0%B0%D1%80-%D0%B7%D1%8D%D1%80%D0%B3%D0%B8%D0%B9%D0%B3-ologn-%D0%B4-%D0%BE%D0%BB%D0%BE%D1%85" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Хуваагаад нэгтгэх аргаар зэргийг <code>O(LogN)</code>-д олох.</h3>
+
+<p><img src="http://www.ideserve.co.in/learn/img/powerRecursive_1.gif">
+<img src="http://www.cs.cornell.edu/courses/cs3110/2012sp/lectures/lec20-master/images/lec19-diagram1.png">
+<img src="http://i.stack.imgur.com/rcaOC.png"></p>
+
+<pre><code>int power(int n, int k){
+    if(k==0)return 1;
+    if(k==1)return n;
+    if(k &amp; 1) 
+        return power(n, k-1)*n;
+    else 
+        return power(n, k/2)*power(n, k/2);
+}
+</code></pre>
 
 <h3>
 <a id="Матрицын-c-хэл-дээрх-код" class="anchor" href="#%D0%9C%D0%B0%D1%82%D1%80%D0%B8%D1%86%D1%8B%D0%BD-c-%D1%85%D1%8D%D0%BB-%D0%B4%D1%8D%D1%8D%D1%80%D1%85-%D0%BA%D0%BE%D0%B4" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Матрицын C++ хэл дээрх код</h3>
