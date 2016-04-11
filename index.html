@@ -130,6 +130,32 @@ M^k x |  f(n)  | = | f(n+k) |
       | f(n-1) |   |f(n+k-1)|
 </code></pre>
 
+<p><code>X(i+k) = M^k * X(i)</code> Бид нар 2 матрицыг <code>O(N^3)</code>-д үржнэ. </p>
+
+<div class="highlight highlight-source-c++"><pre><span class="pl-k">const</span> Matrix Matrix::<span class="pl-k">operator</span>*(<span class="pl-k">const</span> Matrix &amp;A){
+    Matrix <span class="pl-smi">C</span>(A.<span class="pl-smi">N</span>);
+    <span class="pl-k">for</span>( <span class="pl-k">int</span> i = <span class="pl-c1">0</span>; i &lt; A.<span class="pl-smi">N</span>; ++i )
+        <span class="pl-k">for</span>( <span class="pl-k">int</span> j = <span class="pl-c1">0</span>; j &lt; A.<span class="pl-smi">N</span>; ++j ){
+            <span class="pl-k">for</span>( <span class="pl-k">int</span> k = <span class="pl-c1">0</span>; k &lt; A.<span class="pl-smi">N</span>; ++k )
+                C.<span class="pl-smi">data</span>[i][j] = (C.<span class="pl-smi">data</span>[i][j] + data[i][k] * A.<span class="pl-smi">data</span>[k][j])%MOD;
+        }
+    <span class="pl-k">return</span> C;
+}</pre></div>
+
+<p>Тэгвэл <code>К</code> зэргийг шугаман олвол O(N^3*K). </p>
+
+<div class="highlight highlight-source-c++"><pre><span class="pl-k">int</span> <span class="pl-en">naive_power</span>(<span class="pl-k">int</span> a, <span class="pl-k">int</span> k):
+    int res = 1;
+    <span class="pl-k">for</span> (<span class="pl-k">int</span> i=<span class="pl-c1">1</span>; i&lt;=k; i++){
+        res *= a
+    }
+    <span class="pl-k">return</span> res;</pre></div>
+
+<p>Хэрвээ <code>К</code> зэргийг <code>Log</code>-д олж чадвал <code>O(N^3*LogK)</code> болно. </p>
+
+<h3>
+<a id="3-Хуваагаад-эзэмдэх-аргаар-зэргийг-ologn-д-олох" class="anchor" href="#3-%D0%A5%D1%83%D0%B2%D0%B0%D0%B0%D0%B3%D0%B0%D0%B0%D0%B4-%D1%8D%D0%B7%D1%8D%D0%BC%D0%B4%D1%8D%D1%85-%D0%B0%D1%80%D0%B3%D0%B0%D0%B0%D1%80-%D0%B7%D1%8D%D1%80%D0%B3%D0%B8%D0%B9%D0%B3-ologn-%D0%B4-%D0%BE%D0%BB%D0%BE%D1%85" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>3. Хуваагаад эзэмдэх аргаар зэргийг <code>O(LogN)</code>-д олох.</h3>
+
 <h3>
 <a id="Матрицын-c-хэл-дээрх-код" class="anchor" href="#%D0%9C%D0%B0%D1%82%D1%80%D0%B8%D1%86%D1%8B%D0%BD-c-%D1%85%D1%8D%D0%BB-%D0%B4%D1%8D%D1%8D%D1%80%D1%85-%D0%BA%D0%BE%D0%B4" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Матрицын C++ хэл дээрх код</h3>
 
